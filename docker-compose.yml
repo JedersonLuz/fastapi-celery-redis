@@ -1,8 +1,7 @@
 version: '3.8'
 
 services:
-
-  web:
+  app:
     build: .
     ports:
       - 8000:8000
@@ -23,27 +22,26 @@ services:
     environment:
       - CELERY_BROKER_URL=redis://redis:6379/0
       - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    deploy:
+      replicas: 2
     depends_on:
-      - web
+      - app
       - redis
 
   redis:
     image: redis:7
     ports:
       - 6379:6379
-  # celery:
-  #   build: .
-  #   command: celery --app=app.task.app worker --concurrency=1 --loglevel=info
-  #   volumes:
-  #     - .:/app
-  #   depends_on:
-  #     - redis
 
-  # app:
-  #   build: .
-  #   command: fastapi run --reload --host
-  #   volumes:
-  #     - .:/app
-  #   depends_on:
-  #     - redis
-  #     - celery
+  dashboard:
+    build: .
+    command: celery --broker=redis://redis:6379/0 flower --port=5555
+    ports:
+      - 5555:5555
+    environment:
+      - CELERY_BROKER_URL=redis://redis:6379/0
+      - CELERY_RESULT_BACKEND=redis://redis:6379/0
+    depends_on:
+      - app
+      - worker
+      - redis
