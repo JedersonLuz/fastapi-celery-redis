@@ -22,9 +22,8 @@ To run the application, follow these steps:
 
 Once the application is up and running, you can perform various tasks through the FastAPI docs interface:
 
-- Submit a task to Celery: `POST /task`
-- Check the status of a task: `GET /task/{task_id}`
-- Get the result of a completed task: `GET /task/{task_id}/result`
+- Submit a task to Celery: `POST /start/`
+- Check the result of a task: `GET /result/{task_id}/`
 
 ## License
 
