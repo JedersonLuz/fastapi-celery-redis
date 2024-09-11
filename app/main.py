@@ -10,6 +10,7 @@ app = FastAPI()
 class TaskOut(BaseModel):
     id: str
     status: str
+    result: str | None = None
 
 
 @app.get("/start")
@@ -18,11 +19,11 @@ def start(name: str) -> TaskOut:
     return _to_task_out(r)
 
 
-@app.get("/status")
-def status(task_id: str) -> TaskOut:
+@app.get("/result")
+def result(task_id: str) -> TaskOut:
     r = task.app.AsyncResult(task_id)
     return _to_task_out(r)
 
 
 def _to_task_out(r: AsyncResult) -> TaskOut:
-    return TaskOut(id=r.task_id, status=r.status)
+    return TaskOut(id=r.task_id, status=r.status, result=r.result)
