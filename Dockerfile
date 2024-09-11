@@ -1,5 +1,5 @@
 # Use a imagem base do Python 3.10
-FROM python:3.10-slim
+FROM python:3.12-slim
 
 # Expõe a porta 8000
 EXPOSE 8000
@@ -18,6 +18,3 @@ RUN poetry install --no-dev --no-interaction --no-ansi
 
 # Copia o restante dos arquivos para o diretório de trabalho
 COPY . /code
-
-# Define o comando de inicialização do container
-CMD ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8000"]

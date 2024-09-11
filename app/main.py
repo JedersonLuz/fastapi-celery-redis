@@ -1,5 +1,5 @@
 from celery.result import AsyncResult
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI
 from pydantic import BaseModel
 
 from app import task
@@ -13,8 +13,8 @@ class TaskOut(BaseModel):
 
 
 @app.get("/start")
-def start() -> TaskOut:
-    r = task.dummy_task.delay()
+def start(name: str) -> TaskOut:
+    r = task.dummy_task.delay(name=name)
     return _to_task_out(r)
 
 
