@@ -17,6 +17,7 @@ To run the application, follow these steps:
 2. Navigate to the project directory.
 3. Run `docker-compose up --build` to start the containers.
 4. Access the FastAPI application at `http://localhost:8000/docs`.
+5. Access the Celery Flower dashboard at `http://localhost:5555`.
 
 ## Usage
 
